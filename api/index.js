@@ -1,8 +1,11 @@
 const express = require("express");
 require("dotenv").config();
-const {sequelize} = require('./models/index')
+const { sequelize, UUIDV4 } = require("./models/index");
 const app = require("./server");
 const PORT = process.env.PORT || 8000;
+const db = require("./models/");
+const Role = db.role;
+
 
 async function testSequelizeConnection() {
   try {
@@ -15,3 +18,25 @@ async function testSequelizeConnection() {
 }
 testSequelizeConnection();
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and Resync Db");
+  initial();
+});
+
+function initial() {
+  Role.create({
+    id: UUIDV4,
+    name: "user",
+  });
+
+  Role.create({
+    id: UUIDV4,
+    name: "moderator",
+  });
+
+  Role.create({
+    id: UUIDV4,
+    name: "admin",
+  });
+}

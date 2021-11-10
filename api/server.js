@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to node, jwt, auth." });
+  res.json({ message: "Welcome to WaterQuality" });
 });
 app.use("/", routes);
 module.exports = app;
